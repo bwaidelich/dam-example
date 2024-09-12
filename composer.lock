@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce2c54bb82d8ccfb50f20e3c9b5c047a",
+    "content-hash": "862121b14c58914520b2679beb13cc30",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -3147,16 +3147,16 @@
         },
         {
             "name": "wwwision/dam",
-            "version": "dev-main",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bwaidelich/Wwwision.DAM.git",
-                "reference": "4de60e1b96d78a41e4cd49880a883d3bea5ad2da"
+                "reference": "fe04f0e02cf52a95894ad777a2348f42aba8444b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bwaidelich/Wwwision.DAM/zipball/4de60e1b96d78a41e4cd49880a883d3bea5ad2da",
-                "reference": "4de60e1b96d78a41e4cd49880a883d3bea5ad2da",
+                "url": "https://api.github.com/repos/bwaidelich/Wwwision.DAM/zipball/fe04f0e02cf52a95894ad777a2348f42aba8444b",
+                "reference": "fe04f0e02cf52a95894ad777a2348f42aba8444b",
                 "shasum": ""
             },
             "require": {
@@ -3166,7 +3166,6 @@
             "require-dev": {
                 "larapack/dd": "^1.1"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -3180,7 +3179,7 @@
             "description": "Proof of Concept of a simple Digital Asset Management built on top of the Event Sourced Content Repository",
             "support": {
                 "issues": "https://github.com/bwaidelich/Wwwision.DAM/issues",
-                "source": "https://github.com/bwaidelich/Wwwision.DAM/tree/main"
+                "source": "https://github.com/bwaidelich/Wwwision.DAM/tree/0.3.0"
             },
             "funding": [
                 {
@@ -3192,7 +3191,7 @@
                     "type": "paypal"
                 }
             ],
-            "time": "2024-09-12T15:15:51+00:00"
+            "time": "2024-09-12T15:47:10+00:00"
         }
     ],
     "packages-dev": [
@@ -4145,7 +4144,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "wwwision/dam": 20,
         "neos/contentrepository-core": 10,
         "neos/contentgraph-doctrinedbaladapter": 10,
         "roave/security-advisories": 20
