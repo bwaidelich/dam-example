@@ -1,0 +1,83 @@
+{% extends "base.html.twig" %}
+
+{% block title %}DAM{% endblock %}
+{% block content %}
+    <section style="flex-grow: 1; background: #f0f0f0; padding: 1em">
+        {% macro folderLink(tree, selectedFolderId, isRoot = false) %}
+            {% set isCurrentFolder = (tree.folder.id == selectedFolderId) or (isRoot and selectedFolderId == null) %}
+            <li>
+                {% if isCurrentFolder %}
+                    <b>{{ tree.folder.label }}</b>
+                {% else %}
+                    {% if isRoot %}
+                        <a href="/">{{ tree.folder.label }}</a>
+                    {% else %}
+                        <a href="/?folder={{ tree.folder.id }}">{{ tree.folder.label }}</a>
+                    {% endif %}
+                {% endif %}
+                {% if tree.children %}
+                    <ul>
+                        {% for childTree in tree.children %}
+                            {{ _self.folderLink(childTree, selectedFolderId) }}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% if isCurrentFolder %}
+                    <br>
+                    <a href="javascript:document.querySelector('#dialog-add-folder').showModal()"><b>Add sub folder</b></a>
+                {% endif %}
+            </li>
+        {% endmacro %}
+        <ul>
+            {{ _self.folderLink(folderTree, selectedFolderId, true) }}
+        </ul>
+    </section>
+    <section style="flex-basis: 0; flex-grow: 999; min-inline-size: 50%;">
+        {% if assets|length > 0 %}
+            {% for asset in assets %}
+                <aside>
+                    <a href="/assets/{{ asset.id }}">
+                        <figure>
+                            <img alt="{{ asset.caption }}" src="https://placehold.co/285x150?text=Missing+preview">
+                            <figcaption>{{ asset.caption }}</figcaption>
+                        </figure>
+                    </a>
+                </aside>
+            {% endfor %}
+        {% else %}
+            <em>There are no assets in this folder</em>
+        {% endif %}
+        <hr>
+        <a href="javascript:document.querySelector('#dialog-add-asset').showModal()"><b>Add asset</b></a>
+    </section>
+
+
+    <dialog id="dialog-add-folder">
+        <form action="/add-folder" method="POST" style="border: none; box-shadow: none">
+            {% if selectedFolderId %}
+                <input type="hidden" name="parentFolderId" value="{{ selectedFolderId }}">
+            {% endif %}
+            <label for="label">Label of the folder</label>
+            <input type="text" id="label" name="label" required>
+            <br>
+            <button type="submit">Add folder</button>
+        </form>
+    </dialog>
+
+    <dialog id="dialog-add-asset">
+        <form action="/add-asset" method="POST" enctype="multipart/form-data" style="border: none; box-shadow: none">
+            {% if selectedFolderId %}
+                <input type="hidden" name="folderId" value="{{ selectedFolderId }}">
+            {% endif %}
+            <label for="file">File:</label>
+            <input type="file" id="file" name="file" required>
+            <label for="label">Label (optional)</label>
+            <input type="text" id="label" name="label">
+            <label for="caption">Caption (optional)</label>
+            <textarea id="caption" name="caption"></textarea>
+            <br>
+            <button type="submit">Upload file</button>
+        </form>
+    </dialog>
+
+{% endblock %}

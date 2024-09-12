@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" style="--width-content: 2000px">
+<head>
+    {% block head %}
+        <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{% endblock %} - My Webpage</title>
+    {% endblock %}
+</head>
+<body>
+<main style="display: flex; flex-wrap: wrap; gap: 2em">
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>

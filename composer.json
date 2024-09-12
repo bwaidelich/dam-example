@@ -1,0 +1,48 @@
+{
+    "name": "wwwision/dam-example",
+    "description": "Standalone PHP project that uses the Neos Event Sourced Content Repository for a simple digital asset management",
+    "type": "project",
+    "require": {
+        "php": "^8.3",
+        "wwwision/dam": "@dev",
+        "neos/contentrepository-core": "9.0.0-beta13",
+        "neos/contentgraph-doctrinedbaladapter": "9.0.0-beta13",
+        "doctrine/dbal": "^3",
+        "helhum/dotenv-connector": "^3.1",
+        "slim/slim": "^4.14",
+        "slim/twig-view": "^3.4",
+        "guzzlehttp/psr7": "^2.7"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
+        "larapack/dd": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wwwision\\DamExample\\": "src/"
+        }
+    },
+    "license": "MIT",
+    "scripts": {
+        "setup": "php setup.php",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "php -S localhost:8787 index.php"
+        ]
+    },
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/bwaidelich"
+        },
+        {
+            "type": "paypal",
+            "url": "https://www.paypal.me/bwaidelich"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "helhum/dotenv-connector": true
+        }
+    }
+}
