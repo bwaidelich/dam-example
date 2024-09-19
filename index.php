@@ -71,6 +71,7 @@ $app->post('/add-asset', function (ServerRequestInterface $request, ResponseInte
         $file->moveTo($targetPath);
     }
 
+    $folderId = $request->getParsedBody()['folderId'] ?? null;
     $dam->handle(AddAsset::create(
         id: AssetId::create(),
         mediaType: $file->getClientMediaType(),
@@ -78,10 +79,11 @@ $app->post('/add-asset', function (ServerRequestInterface $request, ResponseInte
         filename: $file->getClientFilename(),
         label: $label,
         caption: $caption,
-        folderId: $request->getParsedBody()['folderId'] ?? null,
+        folderId: $folderId,
     ));
+    $query = $folderId !== null ? 'folder=' . $folderId : '';
     return $response
-        ->withHeader('Location', (string)$request->getUri()->withPath('/'))
+        ->withHeader('Location', (string)$request->getUri()->withPath('/')->withQuery($query))
         ->withStatus(303);
 });
 
