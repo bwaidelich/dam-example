@@ -38,7 +38,7 @@
                 <aside>
                     <a href="/assets/{{ asset.id }}">
                         <figure>
-                            <img alt="{{ asset.caption }}" src="https://placehold.co/285x150?text=Missing+preview">
+                            {{ asset_preview(asset) }}
                             <figcaption>{{ asset.caption }}</figcaption>
                         </figure>
                     </a>

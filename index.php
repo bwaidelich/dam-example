@@ -1,5 +1,7 @@
 <?php
 
+use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
@@ -13,6 +15,7 @@ use Wwwision\DAM\Model\Filter\AssetFilter;
 use Wwwision\DAM\Model\FolderId;
 use Wwwision\DAM\Model\ResourcePointer;
 use Wwwision\DamExample\Factory;
+use Wwwision\DamExample\Twig\AssetPreviewExtension;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -20,6 +23,7 @@ $dam = Factory::build();
 
 $app = AppFactory::create();
 $twig = Twig::create(__DIR__ . '/templates', ['cache' => false]);
+$twig->addExtension(new AssetPreviewExtension());
 $app->add(TwigMiddleware::create($app, $twig));
 
 $app->get('/', function (ServerRequestInterface $request, ResponseInterface $response) use ($dam) {
@@ -35,6 +39,18 @@ $app->get('/', function (ServerRequestInterface $request, ResponseInterface $res
         'tags' => $dam->findTags(),
         'selectedFolderId' => $queryParams['folder'] ?? null,
     ]);
+});
+
+$app->get('/thumbnails/{resourcePointer}', function (ServerRequestInterface $request, ResponseInterface $response, array $args) use ($dam) {
+    $filePath = __DIR__ . '/assets/' . $args['resourcePointer'];
+    if (!file_exists($filePath)) {
+        return $response
+            ->withHeader('Location', 'https://placehold.co/285x150?text=Missing')
+            ->withStatus(303);
+    }
+    // TODO scale down image
+    $resource = Utils::tryFopen($filePath, 'rb');
+    return $response->withBody(Utils::streamFor($resource));
 });
 
 $app->get('/assets/{assetId}', function (ServerRequestInterface $request, ResponseInterface $response, array $args) use ($dam) {
